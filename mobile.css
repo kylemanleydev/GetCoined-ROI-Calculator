@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@700&display=swap');
+/*****SET BROWSER DEFAULT BODY SIZE AND INITIALIZE ELEMENTS*****/
+html, body {
+	margin: 0px auto;
+	padding: 0;
+	overflow: hidden;
+	height: 100%;
+	width: 100%;
+}
+
+
+/****Viewport-Relative Units to cover page fully****/
+body {
+	height: 100vh;
+	width: 100vw;
+	font-family: 'PT Mono', monospace;
+	color: rgba(30, 30, 30, 0.87); /* Gray */
+}
+
+/****Set border-box on all elements****/
+* {
+	box-sizing: border-box;
+}
+
+/******************PAGE LAYOUT****************/
+
+#global_page {
+	height: 100%;
+	width: 100%;
+}
+
+#global_header {
+	height:	10%;
+	width: 100%;
+	min-height: 130px;
+	min-width: 800px;
+	background-color: #FFFFFF; /* White */
+}
+
+#global_body {
+	height:	100%;
+	width: 100%;
+	vertical-align: top;
+	background-color: #DEDEDE; /* Light Gray */
+	background-repeat: no-repeat;
+}
+
+/***********HEADER***************/
+
+#banner_layout {
+	width: 100%;
+	height: 100%;
+	margin: 0 auto;
+	min-width: 640px;
+	margin-left: 50px;
+}
+
+#banner_nav {
+	display: inline-block;
+	position: relative;
+	bottom: 50px;
+}
+
+nav a {
+	padding: 10px;
+	text-decoration: none;
+	color: rgba(30,30,30,0.75); 
+	font-size: 150%;
+}
+
+nav a:hover {
+	color: #1E1E1E; /* Black */
+	transition: color .3s ease;
+    transition-property: color;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+    transition-delay: 0s;
+}
+
+#ROI_Calc {
+	background-color: #DEDEDE; /* Light Gray */
+	padding: 10px;
+	height: 100%;
+	margin: auto;
+	color: #1E1E1E;
+}
+
+#banner_img {
+	height: 100%;
+	padding: 15px;
+}
+
+/*************Content************/
+
+#mid_body {
+	margin: 0 auto;
+	width: 80%;
+	height: 100%;
+	font-size: 150%;
+}
+
+#content_container {
+	width: 100%;
+	height: 100%;
+	display: inline;
+}
+
+#blank_space {
+	width: 100%;
+	height: 5%;
+}
+
+#content {
+	width: 100%;
+	height: 100%;
+	display: inline;
+}
+
+#ROI_banner {
+	font-family: 'Open Sans Condensed', sans-serif;
+	font-size: 175%;
+	margin: 0px;
+	color: #1E1E1E; /* Black */
+	text-transform: uppercase;
+	line-height: 1.5;
+	word-break;
+	min-width: 620px;
+}
+
+#instructions_container {
+	width: 100%;
+	height: 35%;
+	overflow: hidden;
+}
+
+#form_container {
+	width: 100%;
+	height: 100%;
+	text-align: center;
+}
+
+#instructions {
+	min-width: 620px;
+	line-height: 1.5;
+}
+
+form {
+	font-family: 'Open Sans Condensed', sans-serif;
+	font-size: 175%;
+	line-height: 1.5;
+	text-align: center;
+}
+
+input {
+	font-family: 'Open Sans Condensed', sans-serif;
+	font-size: 50%;
+}
+
+#date_form {
+	width: 100%;
+	height: 50%;
+}
+
+#invest_form {
+	width: 100%;
+	height: 50%;
+}
