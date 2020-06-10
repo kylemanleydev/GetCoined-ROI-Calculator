@@ -35,7 +35,7 @@
 	</p>
 	</div> <!--instructions_container-->
 	<div id="form_container">
-	<form action="/" method="post"> 
+	<form onsubmit="calcROI();return false">
 		<div id="date_form">
 		<label for="date">Date invested in Bitcoin</label>
 		<input id="date_field" name="date" type="date" min="2010-07-18" max="" value="" required>
@@ -43,7 +43,7 @@
 		<div id="invest_form">
 		<label for="investment">Amount of investment</label>
 		<span id="currencyinput">$ <input id="invest_field" type="number" name="investment" min="1" required></span>
-		<input type="submit" name="submit" value="Submit">
+		<input type="submit" name="submit" value="Calculate ROI">
 		</div> <!--invest_form-->
 	</form><br>
 	</div> <!--form_container-->

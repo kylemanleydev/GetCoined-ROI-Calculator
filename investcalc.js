@@ -32,18 +32,37 @@ request2.open('GET', closingPriceURL);
 request2.responseType = 'json';
 request2.send();
 
-request.onload = function() {
+//Global Variables
+var usdPrice = 0;
+var closingPrice = 0;
+var	invest_amt = 0;
+var search_date = '';
+
+request.onload = function() { //Run after requests are fetched from JSON URL
     const btcPriceData = request.response; //Get our JSON object for BTC Current price
 	console.log(btcPriceData);
 
+	usdPrice = btcPriceData.bpi.USD.rate; //Grab Current USD price from JSON object
+    console.log(usdPrice);	
+}
+
+request2.onload = function() { //Run after requests are fetched from JSON URL 
     const closingPriceData = request2.response; //Get our JSON object for BTC Closing price
 	console.log(closingPriceData);
 
-	var usdPrice = btcPriceData.bpi.USD.rate; //Grab Current USD price from JSON object
-    console.log(usdPrice);	
+//	closingPrice = closingPriceData.bpi.USD.rate; //Grab Current USD price from JSON object
 }
 
 window.onload = function() {
 	document.getElementById("date_field").setAttribute("value", yesterday);
 	document.getElementById("date_field").setAttribute("max", yesterday);
+}
+
+function calcROI() {
+	console.log("Programs initiated");
+	console.log("Bitcoin " + usdPrice);
+	invest_amt = document.getElementById("invest_field").value;	
+	search_date = document.getElementById("date_field").value;
+	console.log("On " + search_date + " the price of BTC closed at $" + closingPrice
+	+ "\nthe price of BTC right now is $" + usdPrice + "/BTC\nYou spent $" + invest_amt + " on BTC");
 }
