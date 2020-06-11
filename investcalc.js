@@ -24,48 +24,41 @@ window.onload = function() {
 	document.getElementById("date_field").setAttribute("max", yesterday);
 }
 
+//Global variables
+var currentPriceURL = 'https://api.coindesk.com/v1/bpi/currentprice/USD.json'; //Current BTC Price URL
+var request = new XMLHttpRequest(); //Request for current Price
+var closingPriceURL = 'https://api.coindesk.com/v1/bpi/historical/close.json?start=2010-07-18&end=' + yesterday; //Historic BTC data URL
+var request2 = new XMLHttpRequest(); //Request2 for date invested in BTC closing price
+var btcPriceData = 0;
+var usdPrice = 0;
+var closingPriceData = 0;
+var closingPrice = 0;
+var bitcoin_amt = 0;
+
 //Calculate and print return on investment
 function calcROI() {
 	var invest_amt = document.getElementById("invest_field").value;	
 	var	search_date = document.getElementById("date_field").value;
 	
-	var p = new Promise(function(resolve, reject){
-		//import our bitcoin current price data from JSON
-		var currentPriceURL = 'https://api.coindesk.com/v1/bpi/currentprice/USD.json';
-		var request = new XMLHttpRequest();
-		request.open('GET', currentPriceURL);
-		request.responseType = 'json';
-		request.send();
-		request.onload = function() { //Run after requests are fetched from JSON URL
-			var btcPriceData = request.response; //get our json object for btc current price
-			var	usdPrice = btcPriceData.bpi.USD.rate; //Grab Current USD price from JSON object
-			console.log("request1 loaded");
-		}
+	request.open('GET', currentPriceURL, true);
+	request.responseType = 'json';
+	request.send(); 
+	request.onreadystatechange = function() {
+	if (this.readyState == 4 && this.status == 200) {
+		btcPriceData = request.response; //Get our json object for BTC current price
+		usdPrice = btcPriceData.bpi.USD.rate; //Grab Current USD price from JSON object
+		usdPrice = parseFloat(usdPrice.replace(/,/g, '')); //Remove comma and convert String to float 
+		document.getElementById("ROI_Calc_Field").innerHTML = "The price of BTC right now is $" + usdPrice.toFixed(2) + "/BTC";
+	  }
+	};
 
-		//import our bitcoin closing price data from JSON
-		var closingPriceURL = 'https://api.coindesk.com/v1/bpi/historical/close.json?start=2010-07-18&end=' + yesterday;
-		var request2 = new XMLHttpRequest();
-		request2.open('GET', closingPriceURL);
-		request2.responseType = 'json';
-		request2.send();
-		request2.onload = function() {
-		var closingPriceData = request2.response; //Get our JSON object for BTC Closing price
-		var closingPrice = closingPriceData.bpi[search_date]; //Get closing price of BTC on date user searched
-		var bitcoin_amt = (invest_amt/closingPrice); //Amount of Bitcoin bought on date
-		console.log("inner request2 loaded");
-		}
-		resolve("Promise finished, we have closing & current price data");
-	});
-	console.log(p);
-
-	p.then(function(val){
-		console.log(val);
-		
-		console.log("btc_amt = " + bitcoin_amt + " current price + " + usdPrice);
-		var currentWorth = (parseFloat(bitcoin_amt)*parseFloat(usdPrice));
-
-		console.log("On " + search_date + " the price of BTC closed at $" + closingPrice);
-		console.log("The price of BTC right now is $" + usdPrice + "/BTC\nYou bought " + bitcoin_amt + "/BTC for $" +
-		invest_amt + " and it's now worth $" + currentWorth);
-	});
+	request2.open('GET', closingPriceURL, true);
+	request2.responseType = 'json';
+	request2.send();
+	request2.onreadystatechange = function() {
+	if (this.readyState == 4 && this.status == 200) {
+		closingPriceData = request2.response; //Get our JSON object for BTC Closing price
+		closingPrice = closingPriceData.bpi[search_date]; //Get closing price of BTC on date user searched
+	  }
+	};
 }
