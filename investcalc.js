@@ -18,56 +18,54 @@ if (dd < 10) {
 }
 var yesterday = yyyy+'-'+mm+'-'+dd; //Get Yesterday in YYYY/MM/DD format
 
-//Global Variables
-var usdPrice = 0;
-var closingPrice = 0;
-var	invest_amt = 0;
-var search_date = '';
-var bitcoin_amt = 0;
-var currentWorth = 0;
-
 //Set max and placeholder value of date input field to yesterday's date default
 window.onload = function() {
 	document.getElementById("date_field").setAttribute("value", yesterday);
 	document.getElementById("date_field").setAttribute("max", yesterday);
 }
 
-//import our bitcoin current price data from JSON
-let currentPriceURL = 'https://api.coindesk.com/v1/bpi/currentprice/USD.json';
-let request = new XMLHttpRequest();
-
-//import our bitcoin closing price data from JSON
-let closingPriceURL = 'https://api.coindesk.com/v1/bpi/historical/close.json?start=2010-07-18&end=' + yesterday;
-let request2 = new XMLHttpRequest();
-
-request.onload = function() { //Run after requests are fetched from JSON URL
-    const btcPriceData = request.response; //get our json object for btc current price
-	usdPrice = btcPriceData.bpi.USD.rate; //Grab Current USD price from JSON object
-
-}
-
-request2.onload = function() { //Run after requests are fetched from JSON URL 
-	const closingPriceData = request2.response; //Get our JSON object for BTC Closing price
-	closingPrice = closingPriceData.bpi[search_date]; //Get closing price of BTC on date user searched
-	bitcoin_amt = (invest_amt/closingPrice); //Amount of Bitcoin bought on date
-}
-
 //Calculate and print return on investment
 function calcROI() {
-	invest_amt = document.getElementById("invest_field").value;	
-	search_date = document.getElementById("date_field").value;
+	var invest_amt = document.getElementById("invest_field").value;	
+	var	search_date = document.getElementById("date_field").value;
+	
+	var p = new Promise(function(resolve, reject){
+		//import our bitcoin current price data from JSON
+		var currentPriceURL = 'https://api.coindesk.com/v1/bpi/currentprice/USD.json';
+		var request = new XMLHttpRequest();
+		request.open('GET', currentPriceURL);
+		request.responseType = 'json';
+		request.send();
+		request.onload = function() { //Run after requests are fetched from JSON URL
+			var btcPriceData = request.response; //get our json object for btc current price
+			var	usdPrice = btcPriceData.bpi.USD.rate; //Grab Current USD price from JSON object
+			console.log("request1 loaded");
+		}
 
-	request.open('GET', currentPriceURL);
-	request.responseType = 'json';
-	request.send();
+		//import our bitcoin closing price data from JSON
+		var closingPriceURL = 'https://api.coindesk.com/v1/bpi/historical/close.json?start=2010-07-18&end=' + yesterday;
+		var request2 = new XMLHttpRequest();
+		request2.open('GET', closingPriceURL);
+		request2.responseType = 'json';
+		request2.send();
+		request2.onload = function() {
+		var closingPriceData = request2.response; //Get our JSON object for BTC Closing price
+		var closingPrice = closingPriceData.bpi[search_date]; //Get closing price of BTC on date user searched
+		var bitcoin_amt = (invest_amt/closingPrice); //Amount of Bitcoin bought on date
+		console.log("inner request2 loaded");
+		}
+		resolve("Promise finished, we have closing & current price data");
+	});
+	console.log(p);
 
-	request2.open('GET', closingPriceURL);
-	request2.responseType = 'json';
-	request2.send();
-	console.log("btc_amt = " + bitcoin_amt + " current price + " + usdPrice);
-	currentWorth = (parseFloat(bitcoin_amt)*parseFloat(usdPrice));
+	p.then(function(val){
+		console.log(val);
+		
+		console.log("btc_amt = " + bitcoin_amt + " current price + " + usdPrice);
+		var currentWorth = (parseFloat(bitcoin_amt)*parseFloat(usdPrice));
 
-	console.log("On " + search_date + " the price of BTC closed at $" + closingPrice);
-	console.log("The price of BTC right now is $" + usdPrice + "/BTC\nYou bought " + bitcoin_amt + "/BTC for $" +
-	invest_amt + " and it's now worth $" + currentWorth);
+		console.log("On " + search_date + " the price of BTC closed at $" + closingPrice);
+		console.log("The price of BTC right now is $" + usdPrice + "/BTC\nYou bought " + bitcoin_amt + "/BTC for $" +
+		invest_amt + " and it's now worth $" + currentWorth);
+	});
 }
