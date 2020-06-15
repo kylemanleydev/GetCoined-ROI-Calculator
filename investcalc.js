@@ -81,7 +81,7 @@ function calcROI() {
 		ROI_final = (current_worth-invest_amt); //Calc final ROI value
 		
 		document.getElementById("ROI_Calc_Field").innerHTML = "The price of BTC right now is $" + usdPrice.toFixed(2) + "/BTC" +
-		"<br>On " + search_date + " the price of BTC closed at $" + closingPrice + "<br>You bought " + bitcoin_amt + " BTC for $" +
-		invest_amt + "<br>You have seen a " + percent_change.toFixed(2) + "% change. Your ROI is $" + ROI_final.toFixed(2);
+		"<br>On " + search_date + " the price of BTC closed at $" + closingPrice + "<br>You bought " + bitcoin_amt.toFixed(8) + " BTC for $" +
+		invest_amt + "<br>You have seen a " + percent_change.toFixed(2) + "% ROI. Your profit is $" + ROI_final.toFixed(2);
 	})
 }
