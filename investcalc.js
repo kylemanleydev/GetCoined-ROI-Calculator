@@ -79,13 +79,11 @@ function calcROI() {
 		current_worth = (bitcoin_amt*usdPrice); //Get value of user's Bitcoins
 		percent_change = (current_worth/invest_amt); //Calc percentage fluxuation
 		ROI_final = (current_worth-invest_amt); //Calc final ROI value
-		
-		console.log("before regex : " + search_date); //DEBUGGING HERE
-		search_date = search_date.replace(/-/g, "/"); //Replace '-' with '/'
-		console.log("after regex : " + search_date); //DEBUGGING HERE
-
+		const [yyyy, mm, dd] = search_date.split('-'); //Parse search_date into 3 variables
+		const date_searched = [mm, dd, yyyy].join('/'); //join variables to get MM/DD/YYYY
+		//Print to text field
 		document.getElementById("ROI_Calc_Field").innerHTML = "The price of BTC right now is $" + usdPrice.toFixed(2) + "/BTC" +
-		"<br>On " + search_date.replace(/-/g,"/") + " the price of BTC closed at $" + closingPrice.toFixed(2) + "<br>You bought " + bitcoin_amt.toFixed(8) + " BTC for $" +
+		"<br>On " + date_searched + " the price of BTC closed at $" + closingPrice.toFixed(2) + "<br>You bought " + bitcoin_amt.toFixed(8) + " BTC for $" +
 		invest_amt + "<br>You have seen a " + percent_change.toFixed(2) + "% ROI. Your profit is $" + ROI_final.toFixed(2);
 	})
 }
