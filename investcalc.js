@@ -42,7 +42,7 @@ var ROI_final = 0;
 function calcROI() {
 	var invest_amt = document.getElementById("invest_field").value;	
 	var	search_date = document.getElementById("date_field").value;
-	
+
 	//Create promise and use AJAX to request current BTC price
 	const requestDataOne = new Promise((resolve, reject) => {
 	request.open('GET', currentPriceURL, true);
@@ -80,8 +80,12 @@ function calcROI() {
 		percent_change = (current_worth/invest_amt); //Calc percentage fluxuation
 		ROI_final = (current_worth-invest_amt); //Calc final ROI value
 		
+		console.log("before regex : " + search_date); //DEBUGGING HERE
+		search_date = search_date.replace(/-/g, "/"); //Replace '-' with '/'
+		console.log("after regex : " + search_date); //DEBUGGING HERE
+
 		document.getElementById("ROI_Calc_Field").innerHTML = "The price of BTC right now is $" + usdPrice.toFixed(2) + "/BTC" +
-		"<br>On " + search_date + " the price of BTC closed at $" + closingPrice + "<br>You bought " + bitcoin_amt.toFixed(8) + " BTC for $" +
+		"<br>On " + search_date.replace(/-/g,"/") + " the price of BTC closed at $" + closingPrice.toFixed(2) + "<br>You bought " + bitcoin_amt.toFixed(8) + " BTC for $" +
 		invest_amt + "<br>You have seen a " + percent_change.toFixed(2) + "% ROI. Your profit is $" + ROI_final.toFixed(2);
 	})
 }
