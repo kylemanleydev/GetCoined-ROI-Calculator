@@ -197,6 +197,7 @@ input {
 
 #ROI_Calc_Table {
 	width: 60%;
+	min-width: 780px;
 	margin: 0px auto;
 	text-align: left;
 	border:1px solid transparent; 
