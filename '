@@ -94,14 +94,7 @@ function calcROI() {
 			ROI_final = '$'+ROI_final; //Add '$' before final ROI
 		}
 		
-		//Set colors of table and cells	
-		document.getElementById("ROI_Calc_Table").style.color = "#1E1E1E";
-		document.getElementById("ROI_Calc_Table").style.borderColor = "#1E1E1E";
-		const cells = document.getElementsByClassName("cell");
-		for(var i = 0; i < cells.length; i++) {
-			cells[i].style.borderColor = "#1E1E1E";	
-		}
-
+		$('table').css({ color: #1E1E1E});	
 		//Set table rows and columns
 		document.getElementById("r1-c1").innerHTML = "Current Price BTC";
 		document.getElementById("r1-c2").innerHTML = '$'+usdPrice+"/BTC";
