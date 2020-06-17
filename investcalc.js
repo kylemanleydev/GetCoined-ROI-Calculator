@@ -81,9 +81,21 @@ function calcROI() {
 		ROI_final = (current_worth-invest_amt); //Calc final ROI value
 		const [yyyy, mm, dd] = search_date.split('-'); //Parse search_date into 3 variables
 		const date_searched = [mm, dd, yyyy].join('/'); //join variables to get MM/DD/YYYY
-
-		document.getElementById("ROI_Calc_Field").innerHTML = "The price of BTC right now is $" + usdPrice.toFixed(2) + "/BTC" +
-		"<br>On " + date_searched + " the price of BTC closed at $" + closingPrice.toFixed(2) + "<br>You bought " + bitcoin_amt.toFixed(8) + " BTC for $" +
-		parseFloat(invest_amt).toFixed(2) + "<br>You have seen a " + percent_change.toFixed(2) + "% ROI. Your profit is $" + ROI_final.toFixed(2);
+		usdPrice = usdPrice.toFixed(2);	//Format decimals for printing
+		closingPrice = closingPrice.toFixed(2);
+		bitcoin_amt = bitcoin_amt.toFixed(8);
+		invest_amt = parseFloat(invest_amt).toFixed(2);
+		percent_change = percent_change.toFixed(2); 
+		ROI_final = ROI_final.toFixed(2);
+		if(ROI_final < 0) {
+			percent_change = '-'+percent_change; //Make percent_change show negative when ROI < 0
+			ROI_final = "-$"+ROI_final.replace(/-/g, ''); //Add "-$" before final ROI and del old '-' with regex
+		} else {
+			ROI_final = '$'+ROI_final; //Add '$' before final ROI
+		}
+		
+		document.getElementById("ROI_Calc_Field").innerHTML = "The price of BTC right now is $" + usdPrice + "/BTC" +
+		"<br>On " + date_searched + " the price of BTC closed at $" + closingPrice + "<br>You bought " + bitcoin_amt + " BTC for $" +
+		invest_amt + "<br>You have seen a " + percent_change + "% ROI. Your profit is " + ROI_final;
 	})
 }
