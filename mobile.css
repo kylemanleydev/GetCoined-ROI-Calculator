@@ -38,11 +38,42 @@ body {
 }
 
 #global_body {
-	height:	100%;
+	height:	82.5%;
 	width: 100%;
 	vertical-align: top;
 	background-color: #DEDEDE; /* Light Gray */
 	background-repeat: no-repeat;
+}
+
+#global_footer {
+	height: 100%;
+	width: 100%;	
+	color: #C0C0C0; /* Silver */
+	background-color: #1E1E1E; /* Dark Black */
+	font-size: 150%;
+	text-align: center;
+}
+
+/***********FOOTER***************/
+
+#footer_banner {
+	line-height: 250%;
+	vertical-align: middle;
+}
+
+#CoinDesk {
+	color: #D3D3D3; /* Light Gray */
+	text-decoration: none;
+}
+
+#CoinDesk:hover {
+	text-decoration: underline;
+	color: #FFFFFF; /* White */
+	transition: color .3s ease;
+    transition-property: color;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+    transition-delay: 0s;
 }
 
 /***********HEADER***************/
