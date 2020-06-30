@@ -4,11 +4,6 @@ date.setDate(date.getDate()-1); //Get Date of Yesterday
 var yyyy = date.getFullYear(); //Get Year 
 var mm = date.getMonth()+1; //Get Month +1 because months are (0-11)
 var dd = date.getDate(); //Get Day
-var date = new Date();
-date.setDate(date.getDate()-1); //Get Date of Yesterday
-var yyyy = date.getFullYear(); //Get Year 
-var mm = date.getMonth()+1; //Get Month +1 because months are (0-11)
-var dd = date.getDate(); //Get Day
 //Add leading '0' before months and days below '10'
 if (mm < 10) {
 	mm = '0' + mm
