@@ -67,7 +67,6 @@ function calcROI() {
 		if(closingPrice == undefined){
 			usingLastClosing = true;
 			lastClosingDate = Object.keys(closingPriceData.bpi)[Object.keys(closingPriceData.bpi).length-1];
-			console.log(lastClosingDate);
 			closingPrice = closingPriceData.bpi[lastClosingDate];
 		} else {
 			usingLastClosing = false;
@@ -79,7 +78,6 @@ function calcROI() {
 	
 	//Run after both Promises have been fulfilled
 	Promise.all([requestDataOne,requestDataTwo]).then((messages) => {
-		console.log(messages); //Print message to console that data was recieved
 		bitcoin_amt = (invest_amt/closingPrice); //Amount of Bitcoin bought on date
 		current_worth = (bitcoin_amt*usdPrice); //Get value of user's Bitcoins
 		percent_change = (current_worth/invest_amt); //Calc percentage fluxuation
