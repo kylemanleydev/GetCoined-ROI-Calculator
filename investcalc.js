@@ -32,6 +32,8 @@ var bitcoin_amt = 0;
 var current_worth = 0;
 var percent_change = 0;
 var ROI_final = 0;
+var usingLastClosing = false;
+var lastClosingDate = '';
 
 //Calculate and print return on investment
 function calcROI() {
@@ -62,6 +64,14 @@ function calcROI() {
 	if (this.readyState == 4 && this.status == 200) {
 		closingPriceData = request2.response; //Get our JSON object for BTC Closing price
 		closingPrice = closingPriceData.bpi[search_date]; //Get closing price of BTC on date user searched
+		if(closingPrice == undefined){
+			usingLastClosing = true;
+			lastClosingDate = Object.keys(closingPriceData.bpi)[Object.keys(closingPriceData.bpi).length-1];
+			console.log(lastClosingDate);
+			closingPrice = closingPriceData.bpi[lastClosingDate];
+		} else {
+			usingLastClosing = false;
+		}
 		resolve('data two taken');
 	  }
 	};
@@ -100,7 +110,15 @@ function calcROI() {
 		//Set table rows and columns
 		document.getElementById("r1-c1").innerHTML = "Current Price BTC";
 		document.getElementById("r1-c2").innerHTML = '$'+usdPrice+"/BTC";
-		document.getElementById("r2-c1").innerHTML = "Closing Price of BTC on "+date_searched;
+		if(usingLastClosing){
+			document.getElementById("date_field").value = lastClosingDate;
+			document.getElementById("table_hint").innerHTML = "*No BTC closing price data for "+date_searched+" using last closing price from "+lastClosingDate;
+			document.getElementById("r2-c1").innerHTML = "Closing Price of BTC on "+lastClosingDate;
+		}
+		else {
+			document.getElementById("table_hint").innerHTML = '';
+			document.getElementById("r2-c1").innerHTML = "Closing Price of BTC on "+date_searched;
+		}
 		document.getElementById("r2-c2").innerHTML = '$'+closingPrice+"/BTC";
 		document.getElementById("r3-c1").innerHTML = "Amount of BTC purchased with $"+invest_amt;
 		document.getElementById("r3-c2").innerHTML = bitcoin_amt+" BTC";
