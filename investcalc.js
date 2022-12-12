@@ -109,9 +109,11 @@ function calcROI() {
 		document.getElementById("r1-c1").innerHTML = "Current Price BTC";
 		document.getElementById("r1-c2").innerHTML = '$'+usdPrice+"/BTC";
 		if(usingLastClosing){
+			const [yyyy, mm, dd] = lastClosingDate.split('-'); //Parse lastClosingDate into 3 variables
+			const date_last_closed = [mm, dd, yyyy].join('/'); //join variables to get MM/DD/YYYY
 			document.getElementById("date_field").value = lastClosingDate;
-			document.getElementById("table_hint").innerHTML = "*No BTC closing price data for "+date_searched+" using last closing price from "+lastClosingDate;
-			document.getElementById("r2-c1").innerHTML = "Closing Price of BTC on "+lastClosingDate;
+			document.getElementById("table_hint").innerHTML = "*No BTC closing price data for "+date_searched+" using latest closing price from "+date_last_closed;
+			document.getElementById("r2-c1").innerHTML = "Closing Price of BTC on "+date_last_closed;
 		}
 		else {
 			document.getElementById("table_hint").innerHTML = '';
